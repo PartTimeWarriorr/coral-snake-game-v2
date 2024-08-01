@@ -5,10 +5,12 @@ void Game::run()
 
     sf::RenderWindow window(sf::VideoMode(800, 800), "Snake v-2", sf::Style::Close);
 
-    sf::RectangleShape bg(sf::Vector2f(800.f, 800.f));
-    bg.setFillColor(sf::Color::Blue);
+    window.setFramerateLimit(15u);
 
-    Snake snek(sf::Vector2f(400, 400), window);
+    sf::RectangleShape bg(sf::Vector2f(800.f, 800.f));
+    bg.setFillColor(sf::Color::Green);
+
+    Snake snek(sf::Vector2f(400, 400));
 
 
     while(window.isOpen())
@@ -22,9 +24,10 @@ void Game::run()
             }
         }
 
+        snek.move();
         window.clear();
         window.draw(bg);
-        window.draw(snek.tempDraw);
+        window.draw(snek);
         window.display();
     }
 }

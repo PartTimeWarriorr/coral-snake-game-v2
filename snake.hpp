@@ -12,15 +12,31 @@ struct BodyNode
     sf::Color color;
 };
 
-class Snake
+enum Direction
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+};
+
+class Snake : public sf::Drawable
 {
     private:
-    list<BodyNode> body; 
+    list<sf::RectangleShape> body; 
     int length;
+    Direction dir = UP;
 
+    // How big each individual part of the snake is
+    float part_size = 20.f;
+
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    void updateDirection();
 
     public:
-    Snake(sf::Vector2f position, sf::RenderWindow& window);
-    sf::RectangleShape tempDraw;
+    Snake(sf::Vector2f position);
+    void move();
+    void loopOver();
+
 
 };
