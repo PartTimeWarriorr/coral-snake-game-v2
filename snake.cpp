@@ -12,11 +12,49 @@ Snake::Snake(sf::Vector2f position)
     p.setFillColor(sf::Color::Red);
     body.push_back(p);
 
-
+    // test purposes
     sf::RectangleShape p2(sf::Vector2f(part_size, part_size));
     p2.setPosition(sf::Vector2f(position.x - 20, position.y - 20));
     p2.setFillColor(sf::Color::Yellow);
     body.push_back(p2);
+
+    // eyes
+    sf::RectangleShape e_1(sf::Vector2f(eye_size, eye_size));
+    sf::RectangleShape e_2(sf::Vector2f(eye_size, eye_size));
+
+    e_1.setFillColor(sf::Color::Black);
+    e_2.setFillColor(sf::Color::Black);
+
+    e_1.setPosition(position.x + 2, position.y + 15);
+    e_2.setPosition(position.x + (part_size - 2 - eye_size), position.y + 15);
+
+    eye1 = e_1;
+    eye2 = e_2;
+
+}
+
+void Snake::positionEyes(sf::Vector2f position)
+{
+
+    switch (dir)
+    {
+    case LEFT:
+        eye1.setPosition(position.x + eye_size, position.y + 2);
+        eye2.setPosition(position.x + eye_size, position.y + 15);
+        break;
+    case RIGHT:
+        eye1.setPosition(position.x + (part_size - 2 - eye_size), position.y + 2);
+        eye2.setPosition(position.x + (part_size - 2 - eye_size), position.y + 15);
+        break;
+    case DOWN:
+        eye1.setPosition(position.x + 2, position.y + 15);
+        eye2.setPosition(position.x + (part_size - 2 - eye_size), position.y + 15);
+        break;
+    case UP:
+        eye1.setPosition(position.x + 3, position.y + 2);
+        eye2.setPosition(position.x + 15, position.y + 2);
+        break;
+    }
 
 }
 
@@ -26,6 +64,10 @@ void Snake::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.draw(part);
     }
+
+    target.draw(eye1);
+    target.draw(eye2);
+
 }
 
 void Snake::updateDirection()
@@ -50,9 +92,29 @@ void Snake::updateDirection()
 
 }
 
-void Snake::loopOver()
+void Snake::loopOver(sf::RectangleShape& part)
 {
+    sf::Vector2f position = part.getPosition();
 
+    // Loop over horizontally
+    if(position.x >= 800)
+    {
+        part.move(-800, 0);
+    }
+    else if(position.x < 0)
+    {
+        part.move(800, 0);
+    }
+
+    // Loop over vertically
+    if(position.y >= 800)
+    {
+        part.move(0, -800);
+    }
+    else if(position.y < 0)
+    {
+        part.move(0, 800);
+    }
 }
 
 void Snake::move()
@@ -84,11 +146,15 @@ void Snake::move()
                 curr_elem.move(0, -20);
                 break;
             } 
+
+            positionEyes(curr_elem.getPosition());
         }
         else
         {
             curr_elem.setPosition(prev_pos);
         }
+
+        loopOver(curr_elem);
 
         prev_pos = curr_pos;
         
