@@ -41,6 +41,9 @@ class Snake : public sf::Drawable
     Snake(sf::Vector2f position);
     void move();
     void loopOver(sf::RectangleShape& part);
+    void addPart();
+
+    sf::Vector2f getHeadPosition();
 
 
 };

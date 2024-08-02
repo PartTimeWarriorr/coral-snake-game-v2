@@ -11,7 +11,7 @@ void Game::run()
     bg.setFillColor(sf::Color::Green);
 
     Snake snek(sf::Vector2f(400, 400));
-
+    FoodGenerator apple(sf::Vector2f(600, 500));
 
     while(window.isOpen())
     {
@@ -25,9 +25,11 @@ void Game::run()
         }
 
         snek.move();
+        apple.checkIfEaten(snek);
         window.clear();
         window.draw(bg);
         window.draw(snek);
+        window.draw(apple);
         window.display();
     }
 }

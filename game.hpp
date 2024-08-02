@@ -3,7 +3,7 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "snake.hpp"
+#include "food.hpp"
 
 class Game
 {

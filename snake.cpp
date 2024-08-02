@@ -160,3 +160,17 @@ void Snake::move()
         
     }
 }
+
+void Snake::addPart()
+{
+    sf::RectangleShape new_p(sf::Vector2f(part_size, part_size));
+    new_p.setPosition(body.back().getPosition());
+    new_p.setFillColor(sf::Color::Black);
+
+    body.push_back(new_p);
+}
+
+sf::Vector2f Snake::getHeadPosition()
+{
+    return body.front().getPosition();
+}
