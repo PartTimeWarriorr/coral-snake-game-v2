@@ -1,9 +1,6 @@
 #include "snake.hpp"
 using std::list;
 
-#include <iostream>
-using std::cout;
-
 
 Snake::Snake(sf::Vector2f position)
 {
@@ -11,12 +8,6 @@ Snake::Snake(sf::Vector2f position)
     p.setPosition(position);
     p.setFillColor(sf::Color::Red);
     body.push_back(p);
-
-    // test purposes
-    sf::RectangleShape p2(sf::Vector2f(part_size, part_size));
-    p2.setPosition(sf::Vector2f(position.x - 20, position.y - 20));
-    p2.setFillColor(sf::Color::Yellow);
-    body.push_back(p2);
 
     // eyes
     sf::RectangleShape e_1(sf::Vector2f(eye_size, eye_size));
@@ -30,6 +21,8 @@ Snake::Snake(sf::Vector2f position)
 
     eye1 = e_1;
     eye2 = e_2;
+
+    length = 1;
 
 }
 
@@ -165,12 +158,57 @@ void Snake::addPart()
 {
     sf::RectangleShape new_p(sf::Vector2f(part_size, part_size));
     new_p.setPosition(body.back().getPosition());
-    new_p.setFillColor(sf::Color::Black);
+    new_p.setFillColor(newPartColor()); // Gets new color depending on the snake length
 
     body.push_back(new_p);
+
+    ++length;
 }
 
-sf::Vector2f Snake::getHeadPosition()
+sf::Color Snake::newPartColor()
+{
+    switch(length % 3)
+    {
+        case 0:
+            return sf::Color::Red;
+        case 1:
+            return sf::Color::Black;
+        case 2:
+            return sf::Color::Yellow;
+    }
+
+    return sf::Color::White;
+}
+
+sf::Vector2f Snake::getHeadPosition() const
 {
     return body.front().getPosition();
+}
+
+list<sf::RectangleShape> Snake::getSnakePosition() const
+{
+    return body;
+}
+
+float Snake::getPartSize() const
+{
+    return part_size;
+}
+
+bool Snake::snakeBump()
+{
+    list<sf::RectangleShape>::iterator it = body.begin();
+    ++it;
+
+    for(;it != body.end(); ++it)
+    {
+        sf::RectangleShape& curr_elem = (*it);
+
+        if(getHeadPosition() == curr_elem.getPosition())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -11,14 +11,14 @@ void Game::run()
     bg.setFillColor(sf::Color::Green);
 
     Snake snek(sf::Vector2f(400, 400));
-    FoodGenerator apple(sf::Vector2f(600, 500));
+    FoodGenerator apple(sf::Vector2f(780, 780), snek);
 
     while(window.isOpen())
     {
         sf::Event event;
         while(window.pollEvent(event))
         {
-            if(event.type == sf::Event::Closed)
+            if(event.type == sf::Event::Closed || snek.snakeBump()) // TODO
             {
                 window.close();
             }

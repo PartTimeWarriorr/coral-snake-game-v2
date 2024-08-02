@@ -1,6 +1,6 @@
 #include "food.hpp"
-#include <iostream>
-using std::cout;
+#include <cmath>
+
 void FoodGenerator::checkIfEaten(Snake& snake)
 {
     if(snake.getHeadPosition() == food.getPosition())
@@ -11,27 +11,30 @@ void FoodGenerator::checkIfEaten(Snake& snake)
 }
 
 void FoodGenerator::updatePosition(Snake& snake)
-{
-    srand(int(snake.getHeadPosition().y * 2));
-    int new_x = rand() % 40 * 20;
+{   
 
-    srand(int(snake.getHeadPosition().x * 2));
-    int new_y = rand() % 40 * 20;
-
-    food.setPosition(new_x, new_y);
-
-    // TODO: change parameters and loop when food isn't spawning in a valid place
-    if(snake.getHeadPosition() == food.getPosition())
+    int random_index = 2;
+    
+    while(snakeCollide(snake))
     {
-        cout << "oops\n";
-        updatePosition(snake);
+        srand(ceil(time(NULL)));
+        int new_x = rand() % 39 * 20;
+
+        srand(ceil(snake.getHeadPosition().x * random_index));
+        int new_y = rand() % 39 * 20;
+
+        food.setPosition(new_x, new_y);
+
+        random_index += 2;
     }
 
 }
 
-FoodGenerator::FoodGenerator(sf::Vector2f position)
+FoodGenerator::FoodGenerator(sf::Vector2f position, Snake& snake)
 {
-    food = sf::RectangleShape(sf::Vector2f(20.f, 20.f));
+    float size = snake.getPartSize();
+
+    food = sf::RectangleShape(sf::Vector2f(size, size));
 
     food.setFillColor(sf::Color(0xF10083FF));
 
@@ -47,4 +50,20 @@ void FoodGenerator::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 sf::Vector2f FoodGenerator::getFoodPosition()
 {
     return food.getPosition();
+}
+
+
+bool FoodGenerator::snakeCollide(Snake& snake)
+{
+    list<sf::RectangleShape> b = snake.getSnakePosition();
+
+    for(auto& p : b)
+    {
+        if(getFoodPosition() == p.getPosition())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -36,14 +36,17 @@ class Snake : public sf::Drawable
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void updateDirection();
     void positionEyes(sf::Vector2f position);
+    sf::Color newPartColor();
 
     public:
     Snake(sf::Vector2f position);
     void move();
     void loopOver(sf::RectangleShape& part);
     void addPart();
+    bool snakeBump();
 
-    sf::Vector2f getHeadPosition();
-
+    sf::Vector2f getHeadPosition() const;
+    list<sf::RectangleShape> getSnakePosition() const;
+    float getPartSize() const;
 
 };
