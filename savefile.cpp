@@ -15,6 +15,7 @@ void SaveFile::readSaveFile()
     if(isEmpty(input))
     {
         updateSaveFile(input, 0);
+        input.close();
         return;
     }
 
@@ -32,7 +33,7 @@ void SaveFile::readSaveFile()
         }
         else
         {
-            updateSaveFile(input, high_score); // TODO ?
+            updateSaveFile(input, high_score); 
         }
     }
 
@@ -55,11 +56,14 @@ bool SaveFile::isHSLine(string line)
 void SaveFile::updateSaveFile(fstream& input, int high_score)
 {
     input.close();
-    input.open("game_info.txt", fstream::in | fstream::trunc);
+    input.open("game_info.txt", fstream::trunc); // change to trunc to entirely replace file contents 
 
     string info = "high_score = " + to_string(high_score);
 
     input << info; 
+
+    input.close();
+    input.open("game_info.txt", fstream::in | fstream::out); // change back to io to continue stream operations
 }
 
 void SaveFile::updateSaveFile(int high_score)
