@@ -48,5 +48,6 @@ class Snake : public sf::Drawable
     sf::Vector2f getHeadPosition() const;
     list<sf::RectangleShape> getSnakePosition() const;
     float getPartSize() const;
+    int getLength() const;
 
 };

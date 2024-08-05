@@ -212,3 +212,8 @@ bool Snake::snakeBump()
 
     return false;
 }
+
+int Snake::getLength() const
+{
+    return length;
+}

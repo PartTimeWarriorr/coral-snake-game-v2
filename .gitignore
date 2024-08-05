@@ -1,3 +1,6 @@
 *.o
 test
 *.sh
+game_info.txt
+test_sv
+test_sv.cpp
