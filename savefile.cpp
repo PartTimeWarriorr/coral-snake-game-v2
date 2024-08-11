@@ -1,44 +1,45 @@
 #include "savefile.hpp"
 
 int SaveFile::high_score = 0;
+unordered_map<string, string> SaveFile::info = {{"high_score", ""}};
 
-void SaveFile::readSaveFile()
+// TODO: refactor this whole mess to represent local data better (hashmap? assume save file is always valid? if not valid.. oh well)
+
+void SaveFile::loadMapFromFile()
 {
-    fstream input("game_info.txt", fstream::in | fstream::out );
-     
-    if(!input.is_open())
-    {
-        std::cerr << "File not found\n";
-        return;
-    }
-
-    if(isEmpty(input))
-    {
-        updateSaveFile(input, 0);
-        input.close();
-        return;
-    }
+    fstream in("game_info.txt", fstream::in);
 
     string buffer;
-    int curr_high = 0;
 
-    while(!input.eof())
+    while(getline(in, buffer))
     {
-        getline(input, buffer);
+        istringstream ss(buffer);
+        string key;
 
-        if(isHSLine(buffer))
+        if(getline(ss, key, '='))
         {
-            curr_high = stoi(buffer.substr(buffer.find_first_of("0123456789"), buffer.size()));
-            high_score = (curr_high > high_score) ? curr_high : high_score; // update high score if new one is better
-        }
-        else
-        {
-            updateSaveFile(input, high_score); 
+            string val;
+            if(getline(ss, val) && info.count(key))
+            {
+                info[key] = val;
+            }
         }
     }
 
-    input.close();
+    in.close();
+}
 
+bool SaveFile::isNum(string value)
+{
+    return all_of(value.begin(), value.end(), ::isdigit);
+}
+
+void SaveFile::printMap()
+{
+    for(auto& elem : SaveFile::info)
+    {
+        cout << elem.first << ' ' << elem.second << '\n';
+    }
 }
 
 bool SaveFile::isEmpty(fstream& input)
