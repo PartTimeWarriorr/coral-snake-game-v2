@@ -1,5 +1,7 @@
 #include "snake.hpp"
+#include <iostream>
 using std::list;
+using std::cout;
 
 
 Snake::Snake(sf::Vector2f position)
@@ -158,6 +160,18 @@ void Snake::addPart()
 {
     sf::RectangleShape new_p(sf::Vector2f(part_size, part_size));
     new_p.setPosition(body.back().getPosition());
+    new_p.setFillColor(newPartColor()); // Gets new color depending on the snake length
+
+    body.push_back(new_p);
+
+    ++length;
+}
+
+void Snake::addPart(sf::Vector2f position)
+{
+
+    sf::RectangleShape new_p(sf::Vector2f(part_size, part_size));
+    new_p.setPosition(position);
     new_p.setFillColor(newPartColor()); // Gets new color depending on the snake length
 
     body.push_back(new_p);

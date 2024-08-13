@@ -43,6 +43,7 @@ class Snake : public sf::Drawable
     void move();
     void loopOver(sf::RectangleShape& part);
     void addPart();
+    void addPart(sf::Vector2f position); // Debugging purposes
     bool snakeBump();
 
     sf::Vector2f getHeadPosition() const;

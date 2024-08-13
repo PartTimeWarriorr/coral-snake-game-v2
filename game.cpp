@@ -8,11 +8,30 @@ void Game::run()
     Game::runDiffSelectionMenu();
 
     sf::RenderWindow window(sf::VideoMode(800, 800), "Coral Snake Game V-2", sf::Style::Close);
-    window.setFramerateLimit(15u); // Set difficulty
+    window.setFramerateLimit(10u); // Set difficulty
     sf::RectangleShape bg(sf::Vector2f(800.f, 800.f));
     bg.setFillColor(sf::Color::Green);
     Snake snek(sf::Vector2f(400, 400));
     FoodGenerator apple(sf::Vector2f(780, 780), snek);
+
+
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+    // snek.addPart(sf::Vector2f(20, 20));
+
 
     while(window.isOpen())
     {
