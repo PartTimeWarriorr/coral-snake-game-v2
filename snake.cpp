@@ -217,6 +217,12 @@ bool Snake::snakeBump()
     for(;it != body.end(); ++it)
     {
         sf::RectangleShape& curr_elem = (*it);
+        
+        // sf::Vector2f headpos = getHeadPosition();
+        // sf::Vector2f elempos = curr_elem.getPosition();
+
+        // cout << "h: " << headpos.x << ' ' << headpos.y << '\n';
+        // cout << "e: " << elempos.x << ' ' << elempos.y << '\n';
 
         if(getHeadPosition() == curr_elem.getPosition())
         {
